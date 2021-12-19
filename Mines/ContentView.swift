@@ -13,6 +13,7 @@ import AVFoundation
 
 struct ContentView: View {
     @ObservedObject var states: StateVars = StateVars()
+    
     var body: some View {
         VStack{
                 switch states.selected{
@@ -20,6 +21,7 @@ struct ContentView: View {
                     NavigationView{
                         VStack{
                             Text("Current Balance:\n \(states.bal, specifier: "$%.2f")").font(.system(size: 25, weight: .bold, design: .default)).padding().fixedSize()
+                            
                             
                             
                             Slider(value: $states.bet, in: 0...states.bal).accentColor(.green).padding()
@@ -135,6 +137,7 @@ struct BetButtons: View {
     var body: some View {
         HStack
         {
+            
             Button(action:
             {
                 if(states.bet*2<states.bal)
@@ -189,6 +192,7 @@ struct BetButtons: View {
 
 struct NavBar: View{
     @ObservedObject var states: StateVars
+    @Environment(\.colorScheme) var colorScheme
     let icons = [
         "diamond.inset.filled",
         "pyramid.fill",
@@ -210,6 +214,8 @@ struct NavBar: View{
                     if(number != states.selected){
                         states.selected = number
                     }
+                    
+                    
                    
                     
                 }, label: {
@@ -217,7 +223,7 @@ struct NavBar: View{
                         .font(.system(size:25,
                                       weight: .regular,
                                       design: .default))
-                        .foregroundColor(.green)
+                        .foregroundColor(colorScheme == .dark ? .white : .black)
                 })
                 
                 Spacer()

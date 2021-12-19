@@ -14,6 +14,7 @@ import UIKit
 struct Plinko: View {
     @State var balls = 3
     @State var ballSize = 80
+    
     @ObservedObject var states: StateVars
     
     
@@ -49,6 +50,7 @@ struct Plinko: View {
 
 struct CircleEven: View {
     var circle_Width: Double
+    @Environment(\.colorScheme) var colorScheme
     var circle_Height: Double
     var postion_Width: Double
     var balls: Double
@@ -59,12 +61,13 @@ struct CircleEven: View {
         
         
         //  ((geometry.size.width/Double(rows) * Double((balls+rowNum)/2)) + (geometry.size.width/Double(rows)) * 0.5)
-        Circle().fill(Color.white).frame(width: circle_Width, height: circle_Height).position(x: (postion_Width * 0.5 - ((postion_Width/rows) * (balls)/2 - postion_Width/rows * 0.5)) + (postion_Width/rows * ballNum)  ,y: postion_Width/rows * 2.0 + postion_Width/rows * rowNum)
+        Circle().fill(colorScheme == .dark ? Color.white : Color.black).frame(width: circle_Width, height: circle_Height).position(x: (postion_Width * 0.5 - ((postion_Width/rows) * (balls)/2 - postion_Width/rows * 0.5)) + (postion_Width/rows * ballNum)  ,y: postion_Width/rows * 2.0 + postion_Width/rows * rowNum)
     }
 }
 
 struct CircleOdd: View {
     var circle_Width: Double
+    @Environment(\.colorScheme) var colorScheme
     var circle_Height: Double
     var postion_Width: Double
     var balls: Double
@@ -75,7 +78,7 @@ struct CircleOdd: View {
         
         
         
-        Circle().fill(Color.white).frame(width: circle_Width, height: circle_Height).position(x: (postion_Width * 0.5 - (postion_Width/rows) * (balls-1)/2) + (postion_Width/rows * ballNum)  ,y: postion_Width/rows * 2.0 + postion_Width/rows * rowNum)
+        Circle().fill(colorScheme == .dark ? Color.white : Color.black).frame(width: circle_Width, height: circle_Height).position(x: (postion_Width * 0.5 - (postion_Width/rows) * (balls-1)/2) + (postion_Width/rows * ballNum)  ,y: postion_Width/rows * 2.0 + postion_Width/rows * rowNum)
     }
 }
 struct Box: View {
