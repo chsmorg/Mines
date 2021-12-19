@@ -156,13 +156,11 @@ struct BetButtons: View {
             
             Button(action:
             {
-                if(states.bet * 0.5 > 0.1)
+                if(states.bet * 0.5 >= 0.01)
                 {
                     states.bet = states.bet * 0.5
                 }
-                else{
-                    states.bet = 0
-                }
+                
                
                 
             },label:{
