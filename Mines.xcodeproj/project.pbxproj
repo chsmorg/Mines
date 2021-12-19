@@ -14,6 +14,13 @@
 		AB23EE95276F3CFF0011B0B8 /* MinesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EE94276F3CFF0011B0B8 /* MinesTests.swift */; };
 		AB23EE9F276F3CFF0011B0B8 /* MinesUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EE9E276F3CFF0011B0B8 /* MinesUITests.swift */; };
 		AB23EEA1276F3CFF0011B0B8 /* MinesUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEA0276F3CFF0011B0B8 /* MinesUITestsLaunchTests.swift */; };
+		AB23EEAE276F3D7C0011B0B8 /* State.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEAD276F3D7B0011B0B8 /* State.swift */; };
+		AB23EEB0276F3DD20011B0B8 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEAF276F3DD20011B0B8 /* Cell.swift */; };
+		AB23EEB2276F3E200011B0B8 /* Mines.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEB1276F3E200011B0B8 /* Mines.swift */; };
+		AB23EEB4276F41970011B0B8 /* diamond.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB23EEB3276F41970011B0B8 /* diamond.mp3 */; };
+		AB23EEB6276F419C0011B0B8 /* bomb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB23EEB5276F419C0011B0B8 /* bomb.mp3 */; };
+		AB23EEB8276F44AE0011B0B8 /* InfoPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEB7276F44AE0011B0B8 /* InfoPage.swift */; };
+		AB23EEBA276F534D0011B0B8 /* Plinko.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEB9276F534D0011B0B8 /* Plinko.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +51,13 @@
 		AB23EE9A276F3CFF0011B0B8 /* MinesUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MinesUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB23EE9E276F3CFF0011B0B8 /* MinesUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinesUITests.swift; sourceTree = "<group>"; };
 		AB23EEA0276F3CFF0011B0B8 /* MinesUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MinesUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		AB23EEAD276F3D7B0011B0B8 /* State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = State.swift; sourceTree = "<group>"; };
+		AB23EEAF276F3DD20011B0B8 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		AB23EEB1276F3E200011B0B8 /* Mines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mines.swift; sourceTree = "<group>"; };
+		AB23EEB3276F41970011B0B8 /* diamond.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = diamond.mp3; path = ../../../diamond.mp3; sourceTree = "<group>"; };
+		AB23EEB5276F419C0011B0B8 /* bomb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bomb.mp3; path = ../../../bomb.mp3; sourceTree = "<group>"; };
+		AB23EEB7276F44AE0011B0B8 /* InfoPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPage.swift; sourceTree = "<group>"; };
+		AB23EEB9276F534D0011B0B8 /* Plinko.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plinko.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,8 +108,15 @@
 		AB23EE82276F3CFB0011B0B8 /* Mines */ = {
 			isa = PBXGroup;
 			children = (
+				AB23EEB3276F41970011B0B8 /* diamond.mp3 */,
+				AB23EEB5276F419C0011B0B8 /* bomb.mp3 */,
 				AB23EE83276F3CFB0011B0B8 /* MinesApp.swift */,
 				AB23EE85276F3CFB0011B0B8 /* ContentView.swift */,
+				AB23EEB9276F534D0011B0B8 /* Plinko.swift */,
+				AB23EEB7276F44AE0011B0B8 /* InfoPage.swift */,
+				AB23EEB1276F3E200011B0B8 /* Mines.swift */,
+				AB23EEAD276F3D7B0011B0B8 /* State.swift */,
+				AB23EEAF276F3DD20011B0B8 /* Cell.swift */,
 				AB23EE87276F3CFF0011B0B8 /* Assets.xcassets */,
 				AB23EE89276F3CFF0011B0B8 /* Preview Content */,
 			);
@@ -231,7 +252,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB23EEB4276F41970011B0B8 /* diamond.mp3 in Resources */,
 				AB23EE8B276F3CFF0011B0B8 /* Preview Assets.xcassets in Resources */,
+				AB23EEB6276F419C0011B0B8 /* bomb.mp3 in Resources */,
 				AB23EE88276F3CFF0011B0B8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,7 +281,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB23EE86276F3CFB0011B0B8 /* ContentView.swift in Sources */,
+				AB23EEB0276F3DD20011B0B8 /* Cell.swift in Sources */,
+				AB23EEBA276F534D0011B0B8 /* Plinko.swift in Sources */,
+				AB23EEB8276F44AE0011B0B8 /* InfoPage.swift in Sources */,
 				AB23EE84276F3CFB0011B0B8 /* MinesApp.swift in Sources */,
+				AB23EEAE276F3D7C0011B0B8 /* State.swift in Sources */,
+				AB23EEB2276F3E200011B0B8 /* Mines.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
