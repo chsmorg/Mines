@@ -13,6 +13,7 @@ import AVFoundation
 
 struct ContentView: View {
     @ObservedObject var states: StateVars = StateVars()
+    @State var plinkoExit = false
     
     var body: some View {
         VStack{
@@ -94,6 +95,7 @@ struct ContentView: View {
                                 if(states.bal != 0 && states.bet != 0)
                                {
                                     states.selected = 5
+                                    plinkoExit = false
                                     if(states.bet>states.bal)
                                     {
                                         states.bet=states.bal
@@ -121,7 +123,23 @@ struct ContentView: View {
                     }
                 case 5:
                     NavigationView{
-                        Plinko(states: states)
+                       // Plinko(states: states)
+                        VStack{
+                            PlinkoView(states: states, exit: plinkoExit)
+                            
+                            Button(action:
+                            {
+                                plinkoExit.toggle()
+                                
+                            },label:{
+                                Text("Exit").padding()
+                                    .foregroundColor(.black)
+                                    .background (.green)
+                                    .cornerRadius(15)
+        
+                            }).padding()
+                        }
+                        
                     }
                 default:
                     Text("error")

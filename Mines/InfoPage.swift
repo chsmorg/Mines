@@ -17,7 +17,7 @@ struct InfoPage: View {
             
             
             Button(action: {
-                self.states.bal += 100
+                self.states.bal += 10000
             },label: {
                 Text("Add Money").padding()
                     .foregroundColor(.black)

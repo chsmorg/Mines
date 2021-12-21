@@ -11,22 +11,28 @@ import SpriteKit
 import UIKit
 
 
+
+
 struct Plinko: View {
     @State var balls = 3
     @State var ballSize = 80
     
-    @ObservedObject var states: StateVars
     
+    @ObservedObject var states: StateVars
     
    
     var body: some View {
-      
+        
+        
+        
+        
+         
         GeometryReader { geometry in
             ForEach(0..<Int(states.rows), id: \.self){ rowNum in
                 ForEach(0..<(balls+Int(rowNum)), id: \.self){ ballNum in
                     if((balls + rowNum) % 2 == 0)
                     {
-                        CircleEven(circle_Width: Double(ballSize/Int(states.rows)), circle_Height: Double(ballSize/Int(states.rows)), postion_Width: geometry.size.width, balls: Double(balls+rowNum), ballNum: Double(ballNum), rows: Int(states.rows), rowNum: Double(rowNum))
+                        CircleEven( circle_Width: Double(ballSize/Int(states.rows)), circle_Height: Double(ballSize/Int(states.rows)), postion_Width: geometry.size.width, balls: Double(balls+rowNum), ballNum: Double(ballNum), rows: Int(states.rows), rowNum: Double(rowNum))
                     }
                     
                     else{
@@ -37,12 +43,7 @@ struct Plinko: View {
                 
             }
             ForEach(0..<Int(states.rows)+1, id: \.self){ box in
-                if(Int(states.rows) + 1 % 2 == 0){
                     EvenBox(postion_Width: geometry.size.width, boxSize: 140.0, boxs: Double(box), rows: Int(states.rows))
-                }
-                else{
-                    EvenBox(postion_Width: geometry.size.width, boxSize: 140.0, boxs: Double(box), rows: Int(states.rows))
-                }
                 
             }
             
@@ -52,9 +53,11 @@ struct Plinko: View {
         
         
     }
+    
 }
 
 struct CircleEven: View {
+    var circle: Circle = Circle()
     var circle_Width: Double
     @Environment(\.colorScheme) var colorScheme
     var circle_Height: Double
@@ -67,8 +70,10 @@ struct CircleEven: View {
         
         
         //  ((geometry.size.width/Double(rows) * Double((balls+rowNum)/2)) + (geometry.size.width/Double(rows)) * 0.5)
-        Circle().fill(colorScheme == .dark ? Color.white : Color.black).frame(width: circle_Width, height: circle_Height).position(x: (postion_Width * 0.5 - ((postion_Width/(Double(rows)+1.5)) * (balls)/2 - postion_Width/(Double(rows)+1.5) * 0.5)) + (postion_Width/(Double(rows)+1.5) * ballNum)  ,y: postion_Width/(Double(rows)+1.5) * 2.0 + postion_Width/(Double(rows)+1.5) * rowNum)
+        circle.fill(colorScheme == .dark ? Color.white : Color.black).frame(width: circle_Width, height: circle_Height).position(x: (postion_Width * 0.5 - ((postion_Width/(Double(rows)+1.5)) * (balls)/2 - postion_Width/(Double(rows)+1.5) * 0.5)) + (postion_Width/(Double(rows)+1.5) * ballNum)  ,y: postion_Width/(Double(rows)+1.5) * 2.0 + postion_Width/(Double(rows)+1.5) * rowNum)
+        
     }
+    
 }
 
 struct CircleOdd: View {
