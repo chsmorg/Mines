@@ -123,7 +123,7 @@ struct ContentView: View {
                     }
                 case 5:
                     NavigationView{
-                       // Plinko(states: states)
+                       //Plinko(states: states)
                         VStack{
                             PlinkoView(states: states, exit: plinkoExit)
                             

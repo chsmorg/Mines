@@ -25,6 +25,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var resistance = UIDynamicItemBehavior()
         let gravity = UIGravityBehavior()
         var attachment: UIAttachmentBehavior!
+        
     
 
     let myFirstButton = UIButton()
@@ -54,11 +55,26 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
     func resetPayOut(){
         self.payOut = 0
     }
+    func fact(i: Double)-> Double{
+        var j = i
+        if(j>1){
+            j *= fact(i: i-1)
+        }
+        return j
+    }
+    func biDis(placement: Int, rows: Int) -> Double{
+        let k = Double(placement)
+        let n = Double(rows)
+        return (fact(i: n)) / (fact(i: k) * fact(i:(n-k)) * pow(2, n))
+        
+    }
     func setStates(states: StateVars){
         self.states = states
     }
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
+            print(setMulti())
+            print(fact(i: 4))
             
             
             boundary = UIView(frame: CGRect(x: 0,
@@ -105,7 +121,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             boundary.addSubview(myFirstButton)
   
                    
-            gravity.magnitude = 0.5
+            gravity.magnitude = 0.6
                    
             collision = UICollisionBehavior(items: staticBalls)
             collision.collisionMode = .boundaries
@@ -127,7 +143,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
                    
                    resistance = UIDynamicItemBehavior(items: staticBalls)
                    resistance.addItem(boundary)
-                   resistance.elasticity = 0.2
+            resistance.elasticity = 0.2
                    
                    
                    animator.addBehavior(gravity)
@@ -151,6 +167,24 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         
         return ball
     }
+    func setMulti() -> [Double]{
+     
+        var rowProp: [Double] = []
+        let r = Int(states.rows)
+        for i in 0...r{
+            if(i==0 || i == r){
+                rowProp.append(biDis(placement: 1, rows: r)/Double(r))
+            }
+            else{
+                rowProp.append(biDis(placement: i, rows: r))
+            }
+            
+        }
+        return rowProp
+        
+    }
+    
+
     }
 
 extension UIView {
@@ -160,6 +194,10 @@ extension UIView {
         self.layer.masksToBounds = true
         self.clipsToBounds = true
     }
+}
+
+func makeboxs(){
+    
 }
 
 func circleEven(circle_Width: Double, circle_Height: Double, postion_Width: Double, balls: Double, ballNum: Double, rows: Int, rowNum: Double, boundary: UIView) -> UIView{
@@ -221,6 +259,9 @@ struct PlinkoView: UIViewControllerRepresentable{
         }
             
     }
+    
+    
+    
     
 
     
