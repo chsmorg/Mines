@@ -9,19 +9,47 @@ import SwiftUI
 import UIKit
 
 
-class PlinkoViewController: UIViewController {
+class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var states: StateVars = StateVars()
-    
-    
+     
         let circleSize: CGFloat = 350.0
-        var ballSize = 100
+        var ballSize = 60
         var startingBalls = 3
         var payOut: Double = 100
         var animator: UIDynamicAnimator!
         var staticBalls: [UIView] = []
+        var boundary: UIView = UIView()
+        var ballsList: [UIView] = []
+        var collision = UICollisionBehavior()
+        var col = UIDynamicBehavior()
+        var resistance = UIDynamicItemBehavior()
+        let gravity = UIGravityBehavior()
+        var attachment: UIAttachmentBehavior!
+    
+
+    let myFirstButton = UIButton()
+    
+    private func collisionBehavior(behavior: UICollisionBehavior, beganContactForItem item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
+         print("Contact - \(identifier)")
+    }
     
     func returnPayOut() -> Double{
         return payOut
+    }
+    func newBall(){
+        
+        let min = (boundary.frame.width * 0.5 - (boundary.frame.width/(Double(states.rows))*0.4))
+        let max = (boundary.frame.width * 0.5 + (boundary.frame.width/(Double(states.rows))*0.2))
+        
+        let ran = Double.random(in: min...max)
+        print(ran)
+        
+        let ball = PlinkoViewController.addBall(circle_Width: Double(160/Int(states.rows)), circle_Height: Double(160/Int(states.rows)), boundary: boundary, ran: ran, rows: Int(states.rows))
+        collision.addItem(ball)
+            gravity.addItem(ball)
+            resistance.addItem(ball)
+            ballsList.append(ball)
+        
     }
     func resetPayOut(){
         self.payOut = 0
@@ -32,22 +60,37 @@ class PlinkoViewController: UIViewController {
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
             
-            let boundary = UIView(frame: CGRect(x: 0,
+            
+            boundary = UIView(frame: CGRect(x: 0,
                                                 y: 0,
-                                                width: view.frame.size.width,
+                                            width: view.frame.size.width ,
                                                 height: view.frame.size.height))
              boundary.layer.borderColor = UIColor.white.cgColor
             boundary.layer.borderWidth = 1.0
             
             view.addSubview(boundary)
+            animator = UIDynamicAnimator(referenceView: boundary)
             
             for rowNum in 0...Int(states.rows)-1{
                 for ballNum in 0...startingBalls+rowNum-1{
                     if((startingBalls+1 + rowNum) % 2 == 0){
-                        staticBalls.append(circleEven( circle_Width: Double(ballSize/Int(states.rows)), circle_Height: Double(ballSize/Int(states.rows)), postion_Width: view.frame.size.width, balls: Double(startingBalls+rowNum), ballNum: Double(ballNum), rows: Int(states.rows), rowNum: Double(rowNum), boundary: boundary))
+                        let ball = circleEven( circle_Width: Double(ballSize/Int(states.rows)), circle_Height: Double(ballSize/Int(states.rows)), postion_Width: view.frame.size.width, balls: Double(startingBalls+rowNum), ballNum: Double(ballNum), rows: Int(states.rows), rowNum: Double(rowNum), boundary: boundary)
+                        
+                        let point = ball.center
+                        attachment = UIAttachmentBehavior(item: ball, attachedToAnchor: point)
+                        attachment.damping = 50
+                        animator.addBehavior(attachment)
+        
+                        staticBalls.append(ball)
                     }
                     else{
-                        staticBalls.append(circleOdd( circle_Width: Double(ballSize/Int(states.rows)), circle_Height: Double(ballSize/Int(states.rows)), postion_Width: view.frame.size.width, balls: Double(startingBalls+rowNum), ballNum: Double(ballNum), rows: Int(states.rows), rowNum: Double(rowNum), boundary: boundary))
+                        let ball = circleOdd( circle_Width: Double(ballSize/Int(states.rows)), circle_Height: Double(ballSize/Int(states.rows)), postion_Width: view.frame.size.width, balls: Double(startingBalls+rowNum), ballNum: Double(ballNum), rows: Int(states.rows), rowNum: Double(rowNum), boundary: boundary)
+                        let point = ball.center
+                        attachment = UIAttachmentBehavior(item: ball, attachedToAnchor: point)
+                        attachment.damping = 50
+                        animator.addBehavior(attachment)
+                        
+                        staticBalls.append(ball)
                         
                     }
                 }
@@ -55,41 +98,59 @@ class PlinkoViewController: UIViewController {
             
             
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+                myFirstButton.setTitle("✸", for: .normal)
+                myFirstButton.setTitleColor(.blue, for: .normal)
+                myFirstButton.frame = CGRect(x: 15, y: -50, width: 300, height: 500)
+                myFirstButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
+            boundary.addSubview(myFirstButton)
+  
                    
+            gravity.magnitude = 0.5
                    
-                   let gravity = UIGravityBehavior(items: staticBalls)
-                   gravity.magnitude = 2.0
+            collision = UICollisionBehavior(items: staticBalls)
+            collision.collisionMode = .boundaries
+            collision.collisionDelegate=self
+            //col.addChildBehavior(collision.collisionDelegate as! UIDynamicBehavior)
+            
+                    collision.addBoundary(withIdentifier: "barrier" as NSCopying, for: UIBezierPath(rect: boundary.frame))
+            
+            for i in 0...staticBalls.count-1{
+                let num = String(i)
+                
+                collision.addBoundary(withIdentifier: num as NSCopying, for: UIBezierPath(ovalIn: staticBalls[i].frame))
+            }
+            
+
+            
+            
+
                    
-                   let collision = UICollisionBehavior(items: staticBalls)
-                   collision.collisionMode = .boundaries
-                   collision.addBoundary(withIdentifier: "Boundary" as NSCopying,
-                                         for: UIBezierPath.init(rect: boundary.bounds))
-                   
-                   let resistance = UIDynamicItemBehavior(items: staticBalls)
+                   resistance = UIDynamicItemBehavior(items: staticBalls)
                    resistance.addItem(boundary)
-                   resistance.elasticity = 0.5
+                   resistance.elasticity = 0.2
                    
-                   animator = UIDynamicAnimator(referenceView: boundary)
-                   //animator.addBehavior(gravity)
+                   
+                   animator.addBehavior(gravity)
                    animator.addBehavior(collision)
                    animator.addBehavior(resistance)
         }
+    
+    @objc func pressed() {
+        newBall()
+    }
+    
+    class func addBall(circle_Width: Double,circle_Height: Double, boundary:  UIView, ran: Double, rows: Int) -> UIView{
+        
+        print(ran)
+        
+        let ball = UIView(frame: CGRect(x: ran, y: boundary.frame.width/Double(rows)+1.5, width: circle_Width,height: circle_Height))
+        ball.backgroundColor = UIColor.red
+        ball.setCornerRadius(circle_Width/2)
+        boundary.addSubview(ball)
+        
+        
+        return ball
+    }
     }
 
 extension UIView {
@@ -102,16 +163,20 @@ extension UIView {
 }
 
 func circleEven(circle_Width: Double, circle_Height: Double, postion_Width: Double, balls: Double, ballNum: Double, rows: Int, rowNum: Double, boundary: UIView) -> UIView{
-    
     let ball = UIView(frame: CGRect(x: (postion_Width * 0.5 - ((postion_Width/(Double(rows)+1.75)) * (balls)/2 - postion_Width/(Double(rows)+2) * 0.5)) + (postion_Width/(Double(rows)+2) * ballNum), y: postion_Width/(Double(rows)+1.5) * 2.0 + postion_Width/(Double(rows)+1.5) * rowNum, width: circle_Width,height: circle_Height))
     ball.backgroundColor = UIColor.white
     ball.setCornerRadius(circle_Width/2)
+    
     boundary.addSubview(ball)
+    
+    
     
     
     return ball
     
 }
+
+
 
 func circleOdd(circle_Width: Double, circle_Height: Double, postion_Width: Double, balls: Double, ballNum: Double, rows: Int, rowNum: Double, boundary: UIView) -> UIView{
     
@@ -130,6 +195,8 @@ func circleOdd(circle_Width: Double, circle_Height: Double, postion_Width: Doubl
 
 
 
+
+
 struct PlinkoView: UIViewControllerRepresentable{
     @ObservedObject var states: StateVars
     var exit: Bool
@@ -140,6 +207,12 @@ struct PlinkoView: UIViewControllerRepresentable{
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
+        //thisView.setStates(states: states)
+        if(states.ballsToDrop > 0){
+            thisView.newBall()
+            print("dropped")
+            states.ballsToDrop -= 1
+        }
         if(exit){
             states.selected = 1
             states.bal += thisView.returnPayOut()

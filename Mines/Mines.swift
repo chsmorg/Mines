@@ -115,6 +115,7 @@ struct BView: View {
         if(cell.type==0){
             cell.img
                 .opacity(self.selectedBtn == self.cell.num ? 1 : 0)
+               
                 .foregroundColor(.green)
                 .font (.system (size: 30))
                 .frame (minWidth: 0, maxWidth: .infinity, minHeight: 50)

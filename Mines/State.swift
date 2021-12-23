@@ -23,6 +23,7 @@ class StateVars: ObservableObject {
     @Published var risk: Double = 0
     @Published var selected = 0
     @Published var data: [Cell] = Cell.fillMinesList(mines: 0)
+    @Published var ballsToDrop: Int = 0
 
     class func reset(states: StateVars){
         states.buttonsHit = 0

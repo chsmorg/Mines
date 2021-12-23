@@ -127,17 +127,30 @@ struct ContentView: View {
                         VStack{
                             PlinkoView(states: states, exit: plinkoExit)
                             
-                            Button(action:
-                            {
-                                plinkoExit.toggle()
-                                
-                            },label:{
-                                Text("Exit").padding()
-                                    .foregroundColor(.black)
-                                    .background (.green)
-                                    .cornerRadius(15)
-        
-                            }).padding()
+                            HStack{
+                                Button(action:
+                                {
+                                    plinkoExit.toggle()
+                                    
+                                },label:{
+                                    Text("Exit").padding()
+                                        .foregroundColor(.black)
+                                        .background (.green)
+                                        .cornerRadius(15)
+            
+                                }).padding()
+                                Button(action:
+                                {
+                                    states.ballsToDrop += 1
+                                    
+                                },label:{
+                                    Text("Drop").padding()
+                                        .foregroundColor(.black)
+                                        .background (.green)
+                                        .cornerRadius(15)
+            
+                                }).padding()
+                            }
                         }
                         
                     }
