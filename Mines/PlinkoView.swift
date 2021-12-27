@@ -26,7 +26,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         let gravity = UIGravityBehavior()
         var attachment: UIAttachmentBehavior!
         var ballColor = UIColor.white
-        var boxProp: [Double] = []
+        var boxProb: [Double] = []
 
         
     
@@ -75,9 +75,11 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
            
         
     }
+    // resets payout variable
     func resetPayOut(){
         self.payOut = 0
     }
+    // factorial function
     func fact(i: Double)-> Double{
         var j = i
         if(j>1){
@@ -85,27 +87,30 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         }
         return j
     }
+    //calulates a binomial distribution form rows in plinko game at a given placement
     func biDis(placement: Int, rows: Int) -> Double{
-        let k = Double(placement)
-        let n = Double(rows)
+        let k = Double(placement) // at k placement
+        let n = Double(rows) // out of n rows
         return (fact(i: n)) / (fact(i: k) * fact(i:(n-k)) * pow(2, n))
         
     }
+    //sets states variables from outside the class
     func setStates(states: StateVars){
         self.states = states
     }
     
     
         override func viewWillAppear(_ animated: Bool) {
+            // checks if user is in light or dark mode
             if (traitCollection.userInterfaceStyle == .light){
                 ballColor = UIColor.black
             }
             super.viewWillAppear(animated)
-            boxProp = setMulti()
+            boxProb = setMulti() // sets probability for each box
             
             
             
-            
+            // surrounding UIView that encapsulates all other UIViews
             boundary = UIView(frame: CGRect(x: 0,
                                                 y: 0,
                                             width: view.frame.size.width ,
@@ -115,14 +120,13 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             
             view.addSubview(boundary)
             animator = UIDynamicAnimator(referenceView: boundary)
-            
+            // creates static ball placements in view
             for rowNum in 0...Int(states.rows)-1{
                 for ballNum in 0...startingBalls+rowNum-1{
-                    if((startingBalls + rowNum) % 2 == 0){
+                    if((startingBalls + rowNum) % 2 == 0){ //checks if even
                         
                         
                         let ball = circleEven( circle_Width: Double(ballSize/Int(states.rows)), circle_Height: Double(ballSize/Int(states.rows)), postion_Width: view.frame.size.width, balls: Double(startingBalls+rowNum), ballNum: Double(ballNum), rows: Int(states.rows), rowNum: Double(rowNum), boundary: boundary, ballColor: ballColor)
-                        
                         let point = ball.center
                         attachment = UIAttachmentBehavior(item: ball, attachedToAnchor: point)
                         attachment.damping = 50
@@ -142,20 +146,21 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
                     }
                 }
             }
+            //creates boxs in view
            makeBoxs()
             
             
-            
+            // temp button to drop balls
                 myFirstButton.setTitle("✸", for: .normal)
                 myFirstButton.setTitleColor(.blue, for: .normal)
                 myFirstButton.frame = CGRect(x: 15, y: -50, width: 300, height: 500)
                 myFirstButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
             boundary.addSubview(myFirstButton)
   
-                   
+            //gravity
             gravity.magnitude = 0.5
                    
-            //collision = UICollisionBehavior(items: ballsList)
+            //collision
             collision.collisionMode = .boundaries
             self.collision.collisionDelegate = self
             
@@ -172,30 +177,31 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
 
             
             
-                   // newBall()
-           // collision.addItem(ballsList[0])
-           // collision.collisionDelegate = self
+               
                    
+            
+            // resistance
                    resistance = UIDynamicItemBehavior(items: staticBalls)
                    resistance.addItem(boundary)
-            resistance.elasticity = 0.25
+                   resistance.elasticity = 0.25
                    
-                   
+             // add to animator
                    animator.addBehavior(gravity)
                    animator.addBehavior(collision)
-                    
-                   //colDetect.addChildBehavior(collision)
                    animator.addBehavior(resistance)
-                   //animator.addBehavior(colDetect)
+                
         }
-    
+    //temp button for new ball
     @objc func pressed() {
         newBall()
     }
+    
+    //should allow for collision detection (not working)
     private func collisionBehavior(behavior: UICollisionBehavior!, beganContactForItem item: UIDynamicItem!, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
         print("please")
     }
     
+    //creates a new ball to drop into the view
     class func addBall(circle_Width: Double,circle_Height: Double, boundary:  UIView, ran: Double, rows: Int) -> UIView{
         
        // print(ran)
@@ -208,6 +214,8 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         
         return ball
     }
+    
+    //sets the probability for each box
     func setMulti() -> [Double]{
      
         var rowProp: [Double] = []
@@ -224,11 +232,11 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         return rowProp
         
     }
-    
+    // creates boxs for view
     func makeBoxs() -> [UIView]{
     var boxList: [UIView] = []
         for i in 0...Int(states.rows){
-            let box =  boxs(postion_Width: boundary.frame.width, boxSize: 160, boxs: Double(i), rows: Int(states.rows), boxProp: boxProp, circleWidth: Double(ballSize/Int(states.rows)))
+            let box =  boxs(postion_Width: boundary.frame.width, boxSize: 160, boxs: Double(i), rows: Int(states.rows), boxProb: boxProb, circleWidth: Double(ballSize/Int(states.rows)))
             boundary.addSubview(box)
             boxList.append(box)
             
@@ -256,11 +264,15 @@ extension UIView {
     }
 }
 
-
+// even static ball creation
 func circleEven(circle_Width: Double, circle_Height: Double, postion_Width: Double, balls: Double, ballNum: Double, rows: Int, rowNum: Double, boundary: UIView, ballColor: UIColor) -> UIView{
     let postionWidthDisplacement = postion_Width
+    
+    // divides view into equal parts based off amount of rows
     let bpw = postionWidthDisplacement/(Double(rows)+2)
-    let ballWidthDisplacment = postionWidthDisplacement/2 - ((bpw * (balls-2)/2) + (bpw * 0.5)) - circle_Width/2
+    
+    // cuts view in half and displaces stating X postion based off how many balls are in a row
+    let ballWidthDisplacment = postionWidthDisplacement/2 - ((bpw * (balls-2)/2) + (bpw * 0.5)) - circle_Width/2 //
                             
     let ball = UIView(frame: CGRect(x: ballWidthDisplacment + (bpw * ballNum), y:
     (bpw * 2.0) + (bpw * rowNum), width: circle_Width,height: circle_Height))
@@ -297,17 +309,17 @@ func circleOdd(circle_Width: Double, circle_Height: Double, postion_Width: Doubl
     
 }
 
-func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxProp: [Double], circleWidth: Double)-> UIView{
+func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxProb: [Double], circleWidth: Double)-> UIView{
     var boxColor: UIColor
     let bpw = postion_Width/(Double(rows)+2)
     let boxWidthDisplacment = postion_Width/2 - (postion_Width/((Double(rows))+1.07)) * ((Double(rows))/2)
     
     
-    if(boxProp[Int(boxs)] >= 15){
+    if(boxProb[Int(boxs)] >= 15){
         boxColor = UIColor.yellow
         
     }
-    else if (boxProp[Int(boxs)]<15 && boxProp[Int(boxs)]>=3){
+    else if (boxProb[Int(boxs)]<15 && boxProb[Int(boxs)]>=3){
         boxColor = UIColor.orange
     }
     else{
@@ -319,7 +331,7 @@ func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxPr
     box.backgroundColor = boxColor
     box.setCornerRadius(50/Double(rows)+1.5)
     let label = UILabel(frame: CGRect(x: 0, y: 0 , width: 100, height: 100))
-    label.text = String(boxProp[Int(boxs)])
+    label.text = String(boxProb[Int(boxs)])
     box.addSubview(label)
                         
    
