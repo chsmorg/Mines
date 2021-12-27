@@ -125,6 +125,7 @@ struct ContentView: View {
                     NavigationView{
                        //Plinko(states: states)
                         VStack{
+                            
                             PlinkoView(states: states, exit: plinkoExit)
                             
                             HStack{
@@ -151,7 +152,7 @@ struct ContentView: View {
             
                                 }).padding()
                             }
-                        }
+                        } 
                         
                     }
                 default:
