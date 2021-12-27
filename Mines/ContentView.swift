@@ -68,7 +68,14 @@ struct ContentView: View {
                             
                             
                             VStack{
-                                Slider(value: $states.bet, in: 0...states.bal).accentColor(.green).padding()
+                                
+                                if(states.bal >= 2000){
+                                    Slider(value: $states.bet, in: 0...2000).accentColor(.green).padding()
+                                }
+                                else{
+                                    Slider(value: $states.bet, in: 0...states.bal).accentColor(.green).padding()
+                                }
+                                
                                 
                                 Text("Bet Amount: \(states.bet, specifier: "$%.2f")").font(.system(size: 20))
                                 
@@ -166,18 +173,24 @@ struct ContentView: View {
 
 struct BetButtons: View {
     @ObservedObject var states: StateVars
+    
     var body: some View {
+        var limit = states.bal
         HStack
         {
             
             Button(action:
             {
-                if(states.bet*2<states.bal)
+                if(states.selected == 1 && states.bal >= 2000){
+                    limit = 2000
+                }
+                
+                if(states.bet*2<limit)
                 {
                     states.bet = states.bet*2
                 }
                 else{
-                    states.bet = states.bal
+                    states.bet = limit
                 }
                
                 
@@ -208,7 +221,10 @@ struct BetButtons: View {
             
             Button(action:
             {
-                states.bet = states.bal
+                if(states.selected == 1 && states.bal >= 2000){
+                    limit = 2000
+                }
+                states.bet = limit
                
                 
             },label:{

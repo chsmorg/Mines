@@ -330,8 +330,10 @@ func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxPr
     
     box.backgroundColor = boxColor
     box.setCornerRadius(50/Double(rows)+1.5)
-    let label = UILabel(frame: CGRect(x: 0, y: 0 , width: 100, height: 100))
+    let label = UILabel(frame: CGRect(x: 0, y: box.frame.height/2.5 , width: box.frame.width, height: box.frame.height/4))
     label.text = String(boxProb[Int(boxs)])
+    label.font = UIFont(name: label.font.fontName, size: 70/Double(rows))
+    label.textColor = UIColor.black
     box.addSubview(label)
                         
    
