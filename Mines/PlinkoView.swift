@@ -27,6 +27,8 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var attachment: UIAttachmentBehavior!
         var ballColor = UIColor.white
         var boxProb: [Double] = []
+        var boxsList: [UIView] = []
+        var boxHits: [Int] = []
 
         
     
@@ -58,10 +60,12 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         
         //print(ran)
         
-        let ball = PlinkoViewController.addBall(circle_Width: Double(160/Int(states.rows)), circle_Height: Double(160/Int(states.rows)), boundary: boundary, ran: ran, rows: Int(states.rows))
+        let ball = PlinkoViewController.addBall(circle_Width: Double(165/Int(states.rows)), circle_Height: Double(165/Int(states.rows)), boundary: boundary, ran: ran, rows: Int(states.rows))
+        
             
             boundary.addSubview(ball)
         collision.addItem(ball)
+        
             
             
             
@@ -147,7 +151,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
                 }
             }
             //creates boxs in view
-           makeBoxs()
+          boxsList = makeBoxs()
             
             
             // temp button to drop balls
@@ -159,20 +163,34 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
   
             //gravity
             gravity.magnitude = 0.5
+            
+            // resistance
+                   resistance = UIDynamicItemBehavior(items: staticBalls)
+                   resistance.addItem(boundary)
+                   resistance.elasticity = 0.25
                    
             //collision
             collision.collisionMode = .boundaries
-            self.collision.collisionDelegate = self
+            collision.setTranslatesReferenceBoundsIntoBoundary(with: .zero)
+            collision.collisionDelegate = self
             
             
             
-                    collision.addBoundary(withIdentifier: "barrier" as NSCopying, for: UIBezierPath(rect: boundary.frame))
+                    collision.addBoundary(withIdentifier: "barrier" as NSCopying, for: UIBezierPath(rect: boundary.bounds))
             
            for i in 0...staticBalls.count-1{
                let num = String(i)
                 
-               collision.addBoundary(withIdentifier: num as NSCopying, for: UIBezierPath(ovalIn: staticBalls[i].frame))
+               collision.addBoundary(withIdentifier: "staticBall"+num as NSCopying, for: UIBezierPath(ovalIn: staticBalls[i].frame))
             }
+            
+            
+            for i in 0...boxsList.count-1{
+                let num = String(i)
+                 
+                collision.addBoundary(withIdentifier: num as NSCopying, for: UIBezierPath(rect: boxsList[i].frame))
+                resistance.addItem(boxsList[i])
+             }
             
 
             
@@ -180,10 +198,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
                
                    
             
-            // resistance
-                   resistance = UIDynamicItemBehavior(items: staticBalls)
-                   resistance.addItem(boundary)
-                   resistance.elasticity = 0.25
+           
                    
              // add to animator
                    animator.addBehavior(gravity)
@@ -197,9 +212,25 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
     }
     
     //should allow for collision detection (not working)
-    private func collisionBehavior(behavior: UICollisionBehavior!, beganContactForItem item: UIDynamicItem!, withBoundaryIdentifier identifier: NSCopying, atPoint p: CGPoint) {
-        print("please")
-    }
+    func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, at p: CGPoint) {
+        let b = identifier as? String
+        let i = item as? UIView
+        
+        if(Int(b!) != nil){
+            boxHits[Int(b!)!] += 1
+            
+            print(boxHits)
+            
+            
+           
+            
+            i?.removeFromSuperview()
+            collision.removeItem(item)
+            gravity.removeItem(item)
+            resistance.removeItem(item)
+            
+        }
+        }
     
     //creates a new ball to drop into the view
     class func addBall(circle_Width: Double,circle_Height: Double, boundary:  UIView, ran: Double, rows: Int) -> UIView{
@@ -236,9 +267,10 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
     func makeBoxs() -> [UIView]{
     var boxList: [UIView] = []
         for i in 0...Int(states.rows){
-            let box =  boxs(postion_Width: boundary.frame.width, boxSize: 160, boxs: Double(i), rows: Int(states.rows), boxProb: boxProb, circleWidth: Double(ballSize/Int(states.rows)))
+            let box =  boxs(postion_Width: boundary.frame.width, boxSize: 160, boxs: Double(i), rows: Int(states.rows), boxProb: boxProb, circleWidth: Double(ballSize/Int(states.rows)), risk: Double(Int(states.risk)))
             boundary.addSubview(box)
             boxList.append(box)
+            boxHits.append(0)
             
         }
         return boxList
@@ -309,7 +341,7 @@ func circleOdd(circle_Width: Double, circle_Height: Double, postion_Width: Doubl
     
 }
 
-func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxProb: [Double], circleWidth: Double)-> UIView{
+func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxProb: [Double], circleWidth: Double, risk: Double)-> UIView{
     var boxColor: UIColor
     let bpw = postion_Width/(Double(rows)+2)
     let boxWidthDisplacment = postion_Width/2 - (postion_Width/((Double(rows))+1.07)) * ((Double(rows))/2)
@@ -331,7 +363,10 @@ func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxPr
     box.backgroundColor = boxColor
     box.setCornerRadius(50/Double(rows)+1.5)
     let label = UILabel(frame: CGRect(x: 0, y: box.frame.height/2.5 , width: box.frame.width, height: box.frame.height/4))
-    label.text = String(boxProb[Int(boxs)])
+    let multi = (risk+1) / boxProb[Int(boxs)] + risk
+    
+    label.text = String(multi)
+    //label.text = String(0)
     label.font = UIFont(name: label.font.fontName, size: 70/Double(rows))
     label.textColor = UIColor.black
     box.addSubview(label)
