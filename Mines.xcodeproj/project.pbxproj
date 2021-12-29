@@ -20,6 +20,7 @@
 		AB23EEB8276F44AE0011B0B8 /* InfoPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEB7276F44AE0011B0B8 /* InfoPage.swift */; };
 		AB23EEBA276F534D0011B0B8 /* Plinko.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEB9276F534D0011B0B8 /* Plinko.swift */; };
 		AB23EEBE277192D70011B0B8 /* PlinkoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEBD277192D60011B0B8 /* PlinkoView.swift */; };
+		AB288553277C1FA600C569E4 /* PlinkoPayOuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288552277C1FA600C569E4 /* PlinkoPayOuts.swift */; };
 		AB4C50E5277A926A00B95E21 /* diamond.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB4C50E3277A926900B95E21 /* diamond.mp3 */; };
 		AB4C50E6277A926A00B95E21 /* bomb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB4C50E4277A926A00B95E21 /* bomb.mp3 */; };
 /* End PBXBuildFile section */
@@ -58,6 +59,7 @@
 		AB23EEB7276F44AE0011B0B8 /* InfoPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPage.swift; sourceTree = "<group>"; };
 		AB23EEB9276F534D0011B0B8 /* Plinko.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plinko.swift; sourceTree = "<group>"; };
 		AB23EEBD277192D60011B0B8 /* PlinkoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlinkoView.swift; sourceTree = "<group>"; };
+		AB288552277C1FA600C569E4 /* PlinkoPayOuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlinkoPayOuts.swift; sourceTree = "<group>"; };
 		AB4C50E3277A926900B95E21 /* diamond.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = diamond.mp3; path = "../../../coding stuff/mines assests/diamond.mp3"; sourceTree = "<group>"; };
 		AB4C50E4277A926A00B95E21 /* bomb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bomb.mp3; path = "../../../coding stuff/mines assests/bomb.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,6 +118,7 @@
 				AB23EE85276F3CFB0011B0B8 /* ContentView.swift */,
 				AB23EEB9276F534D0011B0B8 /* Plinko.swift */,
 				AB23EEBD277192D60011B0B8 /* PlinkoView.swift */,
+				AB288552277C1FA600C569E4 /* PlinkoPayOuts.swift */,
 				AB23EEB7276F44AE0011B0B8 /* InfoPage.swift */,
 				AB23EEB1276F3E200011B0B8 /* Mines.swift */,
 				AB23EEAD276F3D7B0011B0B8 /* State.swift */,
@@ -288,6 +291,7 @@
 				AB23EEBA276F534D0011B0B8 /* Plinko.swift in Sources */,
 				AB23EEBE277192D70011B0B8 /* PlinkoView.swift in Sources */,
 				AB23EEB8276F44AE0011B0B8 /* InfoPage.swift in Sources */,
+				AB288553277C1FA600C569E4 /* PlinkoPayOuts.swift in Sources */,
 				AB23EE84276F3CFB0011B0B8 /* MinesApp.swift in Sources */,
 				AB23EEAE276F3D7C0011B0B8 /* State.swift in Sources */,
 				AB23EEB2276F3E200011B0B8 /* Mines.swift in Sources */,

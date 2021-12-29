@@ -83,7 +83,7 @@ struct ContentView: View {
                                 BetButtons(states: states)
                                 
                                 
-                                Slider(value: $states.rows, in: 8...16).accentColor(.green).padding()
+                                Slider(value: $states.rows, in: 8...14).accentColor(.green).padding()
                                 
                                 Text("Rows: \(Int(states.rows))").font(.system(size: 20))
                                 

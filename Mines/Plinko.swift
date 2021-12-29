@@ -73,7 +73,7 @@ struct Plinko: View {
                 })
                 Text("Spent:\n \(states.totalSpent, specifier: "$%.2f")").font(Font.system(size: 15).monospacedDigit()).padding()
             }
-        }
+        }.navigationTitle("Tap Screen To Drop!")
     }
     
     

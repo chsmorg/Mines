@@ -30,7 +30,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var boxsList: [UIView] = []
         var boxHits: [Int] = []
         let button = UIButton()
-    var startingBet = 0.0
+        var plinkoMultiList: [Double] = []
     
     
     
@@ -129,7 +129,9 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             if (traitCollection.userInterfaceStyle == .light){
                 ballColor = UIColor.black
             }
-            startingBet = states.bet
+            let ppo = PlinkoPayOuts(rows: Int(states.rows), risk: Int(states.risk))
+            plinkoMultiList = ppo.returnPayOut()
+                                    
             super.viewWillAppear(animated)
             boxProb = setMulti() // sets probability for each box
             
@@ -182,7 +184,8 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             boundary.addSubview(button)
   
             //gravity
-            gravity.magnitude = 0.5
+            gravity.magnitude = 0.4
+            
             
             // resistance
                    resistance = UIDynamicItemBehavior(items: staticBalls)
@@ -236,7 +239,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         
         if(Int(b!) != nil){
             
-            let multi = (Double(Int(states.risk)+1)) / boxProb[Int(b!)!]
+            let multi = plinkoMultiList[Int(b!)!]
             let boxPayOut = multi * states.bet
             states.plinkoBallsOut.append(StateVars.LastBall(multi: multi, payOut: boxPayOut ))
             states.bal += boxPayOut
@@ -291,7 +294,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
     func makeBoxs() -> [UIView]{
     var boxList: [UIView] = []
         for i in 0...Int(states.rows){
-            let box =  boxs(postion_Width: boundary.frame.width, boxSize: 160, boxs: Double(i), rows: Int(states.rows), boxProb: boxProb, circleWidth: Double(ballSize/Int(states.rows)), risk: Double(Int(states.risk)))
+            let box =  boxs(postion_Width: boundary.frame.width, boxSize: 160, boxs: Double(i), rows: Int(states.rows), boxProb: boxProb, circleWidth: Double(ballSize/Int(states.rows)), risk: Double(Int(states.risk)), plinkoMultiList: plinkoMultiList)
             boundary.addSubview(box)
             boxList.append(box)
             boxHits.append(0)
@@ -365,7 +368,7 @@ func circleOdd(circle_Width: Double, circle_Height: Double, postion_Width: Doubl
     
 }
 
-func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxProb: [Double], circleWidth: Double, risk: Double)-> UIView{
+func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxProb: [Double], circleWidth: Double, risk: Double, plinkoMultiList: [Double])-> UIView{
     var boxColor: UIColor
     let bpw = postion_Width/(Double(rows)+2)
     let boxWidthDisplacment = postion_Width/2 - (postion_Width/((Double(rows))+1.07)) * ((Double(rows))/2)
@@ -386,12 +389,11 @@ func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxPr
     
     box.backgroundColor = boxColor
     box.setCornerRadius(50/Double(rows)+1.5)
-    let label = UILabel(frame: CGRect(x: 0, y: box.frame.height/2.5 , width: box.frame.width, height: box.frame.height/4))
-    let multi = (risk+1) / boxProb[Int(boxs)]
+    let label = UILabel(frame: CGRect(x: box.frame.width/20, y: box.frame.height/2.5 , width: box.frame.width, height: box.frame.height/2.5))
+    let multi = plinkoMultiList[Int(boxs)]
     
-    label.text = String(multi)
-    //label.text = String(0)
-    label.font = UIFont(name: label.font.fontName, size: 70/Double(rows))
+    label.text = String(format: "%.1fx", multi)
+    label.font = UIFont(name: label.font.fontName, size: 100/Double(rows))
     label.textColor = UIColor.black
     box.addSubview(label)
                         
@@ -418,8 +420,8 @@ struct PlinkoView: UIViewControllerRepresentable{
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        thisView.states = states
-        thisView.update()
+        //thisView.states = states
+        //thisView.update()
             
     }
     
