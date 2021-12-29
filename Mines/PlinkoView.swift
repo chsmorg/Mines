@@ -237,6 +237,16 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         let b = identifier as? String
         let i = item as? UIView
         
+        if(b == "barrier"){
+            i?.removeFromSuperview()
+            collision.removeItem(item)
+            gravity.removeItem(item)
+            resistance.removeItem(item)
+            states.totalDropped -= 1
+            states.bal += states.bet * 10
+            
+        }
+        
         if(Int(b!) != nil){
             
             let multi = plinkoMultiList[Int(b!)!]

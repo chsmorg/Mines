@@ -15,15 +15,9 @@ import UIKit
 
 struct Plinko: View {
    @State var plinkoExit = false
-
-    
-    
     @ObservedObject var states: StateVars
-    
    
     var body: some View {
-        
-        
         VStack{
             
             HStack{
@@ -43,6 +37,8 @@ struct Plinko: View {
             ScrollView (.horizontal, showsIndicators: false) {
                 HStack {
                     if(!states.plinkoBallsOut.isEmpty){
+                        
+                        
                         ForEach(0...states.plinkoBallsOut.count-1, id: \.self) { index in
                             ScrollBox(payOut: states.plinkoBallsOut[states.plinkoBallsOut.count-1-index].payOut, multi: states.plinkoBallsOut[states.plinkoBallsOut.count-1-index].multi, betAmount: states.bet)
                                             
