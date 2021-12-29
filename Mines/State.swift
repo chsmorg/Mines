@@ -24,13 +24,25 @@ class StateVars: ObservableObject {
     @Published var selected = 0
     @Published var data: [Cell] = Cell.fillMinesList(mines: 0)
     @Published var ballsToDrop: Int = 0
+    @Published var plinkoBallsOut: [LastBall] = []
+    @Published var totalDropped: Int = 0
+    @Published var totalSpent: Double = 0
 
     class func reset(states: StateVars){
         states.buttonsHit = 0
         states.gamePlay = true
         states.payOut = 0
         states.multi = 1.00
+        states.plinkoBallsOut = []
+        states.ballsToDrop = 0
+        states.totalDropped = 0
+        states.totalDropped = 0
         
+    }
+    
+    struct LastBall{
+        var multi: Double
+        var payOut: Double
     }
 }
 

@@ -29,18 +29,38 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var boxProb: [Double] = []
         var boxsList: [UIView] = []
         var boxHits: [Int] = []
-
-        
-    
-
-    let myFirstButton = UIButton()
+        let button = UIButton()
+    var startingBet = 0.0
     
     
     
     func returnPayOut() -> Double{
         return payOut
     }
+    @objc func pressed() {
+        newBall()
+    }
+    func update(){
+        print(states.ballsToDrop)
+        if(states.ballsToDrop > 0){
+            newBall()
+            print("dropped")
+            states.ballsToDrop -= 1
+        }
+        
+    }
+    
+    
     func newBall(){
+        
+        if(states.bal > states.bet){
+            
+        
+        states.totalSpent += states.bet
+        states.totalDropped += 1
+        states.payOut -= states.bet
+        states.bal -= states.bet
+        
         var ran: Double
         
         let minL = (boundary.frame.width * 0.5 - (boundary.frame.width/(Double(states.rows))*0.9))
@@ -60,7 +80,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         
         //print(ran)
         
-        let ball = PlinkoViewController.addBall(circle_Width: Double(165/Int(states.rows)), circle_Height: Double(165/Int(states.rows)), boundary: boundary, ran: ran, rows: Int(states.rows))
+        let ball = addBall(circle_Width: Double(165/Int(states.rows)), circle_Height: Double(165/Int(states.rows)), boundary: boundary, ran: ran, rows: Int(states.rows))
         
             
             boundary.addSubview(ball)
@@ -77,7 +97,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             resistance.addItem(ball)
             ballsList.append(ball)
            
-        
+        }
     }
     // resets payout variable
     func resetPayOut(){
@@ -109,6 +129,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             if (traitCollection.userInterfaceStyle == .light){
                 ballColor = UIColor.black
             }
+            startingBet = states.bet
             super.viewWillAppear(animated)
             boxProb = setMulti() // sets probability for each box
             
@@ -155,11 +176,10 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             
             
             // temp button to drop balls
-                myFirstButton.setTitle("✸", for: .normal)
-                myFirstButton.setTitleColor(.blue, for: .normal)
-                myFirstButton.frame = CGRect(x: 15, y: -50, width: 300, height: 500)
-                myFirstButton.addTarget(self, action: #selector(pressed), for: .touchUpInside)
-            boundary.addSubview(myFirstButton)
+               
+                button.frame = CGRect(x: 0, y: 0, width: boundary.frame.width, height: boundary.frame.height)
+                button.addTarget(self, action: #selector(pressed), for: .touchUpInside)
+            boundary.addSubview(button)
   
             //gravity
             gravity.magnitude = 0.5
@@ -206,10 +226,8 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
                    animator.addBehavior(resistance)
                 
         }
-    //temp button for new ball
-    @objc func pressed() {
-        newBall()
-    }
+    
+   
     
     //should allow for collision detection (not working)
     func collisionBehavior(_ behavior: UICollisionBehavior, beganContactFor item: UIDynamicItem, withBoundaryIdentifier identifier: NSCopying?, at p: CGPoint) {
@@ -217,9 +235,15 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         let i = item as? UIView
         
         if(Int(b!) != nil){
-            boxHits[Int(b!)!] += 1
             
-            print(boxHits)
+            let multi = (Double(Int(states.risk)+1)) / boxProb[Int(b!)!]
+            let boxPayOut = multi * states.bet
+            states.plinkoBallsOut.append(StateVars.LastBall(multi: multi, payOut: boxPayOut ))
+            states.bal += boxPayOut
+            states.payOut += boxPayOut
+           
+            
+            
             
             
            
@@ -233,7 +257,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         }
     
     //creates a new ball to drop into the view
-    class func addBall(circle_Width: Double,circle_Height: Double, boundary:  UIView, ran: Double, rows: Int) -> UIView{
+     func addBall(circle_Width: Double,circle_Height: Double, boundary:  UIView, ran: Double, rows: Int) -> UIView{
         
        // print(ran)
     
@@ -363,7 +387,7 @@ func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxPr
     box.backgroundColor = boxColor
     box.setCornerRadius(50/Double(rows)+1.5)
     let label = UILabel(frame: CGRect(x: 0, y: box.frame.height/2.5 , width: box.frame.width, height: box.frame.height/4))
-    let multi = (risk+1) / boxProb[Int(boxs)] + risk
+    let multi = (risk+1) / boxProb[Int(boxs)]
     
     label.text = String(multi)
     //label.text = String(0)
@@ -386,7 +410,6 @@ func boxs(postion_Width: Double, boxSize: Double, boxs: Double, rows: Int, boxPr
 
 struct PlinkoView: UIViewControllerRepresentable{
     @ObservedObject var states: StateVars
-    
     var exit: Bool
     var thisView = PlinkoViewController()
     func makeUIViewController(context: Context) -> UIViewController {
@@ -395,21 +418,12 @@ struct PlinkoView: UIViewControllerRepresentable{
     }
     
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {
-        thisView.setStates(states: states)
-        if(states.ballsToDrop > 0){
-            states.bal += thisView.returnPayOut()
-            thisView.newBall()
-            print("dropped")
-            states.ballsToDrop -= 1
-        }
-        if(exit){
-            states.selected = 1
-            states.bal += thisView.returnPayOut()
-            thisView.resetPayOut()
-            
-        }
+        thisView.states = states
+        thisView.update()
             
     }
+    
+    
     
     
     

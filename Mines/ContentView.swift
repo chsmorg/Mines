@@ -130,36 +130,8 @@ struct ContentView: View {
                     }
                 case 5:
                     NavigationView{
-                       //Plinko(states: states)
-                        VStack{
-                            
-                            PlinkoView(states: states, exit: plinkoExit)
-                            
-                            HStack{
-                                Button(action:
-                                {
-                                    plinkoExit.toggle()
-                                    
-                                },label:{
-                                    Text("Exit").padding()
-                                        .foregroundColor(.black)
-                                        .background (.green)
-                                        .cornerRadius(15)
-            
-                                }).padding()
-                                Button(action:
-                                {
-                                    states.ballsToDrop += 1
-                                    
-                                },label:{
-                                    Text("Drop").padding()
-                                        .foregroundColor(.black)
-                                        .background (.green)
-                                        .cornerRadius(15)
-            
-                                }).padding()
-                            }
-                        } 
+                       Plinko(states: states)
+                       
                         
                     }
                 default:
