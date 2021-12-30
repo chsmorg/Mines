@@ -23,6 +23,7 @@
 		AB288553277C1FA600C569E4 /* PlinkoPayOuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288552277C1FA600C569E4 /* PlinkoPayOuts.swift */; };
 		AB4C50E5277A926A00B95E21 /* diamond.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB4C50E3277A926900B95E21 /* diamond.mp3 */; };
 		AB4C50E6277A926A00B95E21 /* bomb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB4C50E4277A926A00B95E21 /* bomb.mp3 */; };
+		ABC3664E277D355F004A0AE6 /* drop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ABC3664D277D355F004A0AE6 /* drop.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +63,7 @@
 		AB288552277C1FA600C569E4 /* PlinkoPayOuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlinkoPayOuts.swift; sourceTree = "<group>"; };
 		AB4C50E3277A926900B95E21 /* diamond.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = diamond.mp3; path = "../../../coding stuff/mines assests/diamond.mp3"; sourceTree = "<group>"; };
 		AB4C50E4277A926A00B95E21 /* bomb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bomb.mp3; path = "../../../coding stuff/mines assests/bomb.mp3"; sourceTree = "<group>"; };
+		ABC3664D277D355F004A0AE6 /* drop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = drop.mp3; path = ../../../drop.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 		AB23EE82276F3CFB0011B0B8 /* Mines */ = {
 			isa = PBXGroup;
 			children = (
+				ABC3664D277D355F004A0AE6 /* drop.mp3 */,
 				AB4C50E4277A926A00B95E21 /* bomb.mp3 */,
 				AB4C50E3277A926900B95E21 /* diamond.mp3 */,
 				AB23EE83276F3CFB0011B0B8 /* MinesApp.swift */,
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB4C50E5277A926A00B95E21 /* diamond.mp3 in Resources */,
+				ABC3664E277D355F004A0AE6 /* drop.mp3 in Resources */,
 				AB4C50E6277A926A00B95E21 /* bomb.mp3 in Resources */,
 				AB23EE8B276F3CFF0011B0B8 /* Preview Assets.xcassets in Resources */,
 				AB23EE88276F3CFF0011B0B8 /* Assets.xcassets in Resources */,

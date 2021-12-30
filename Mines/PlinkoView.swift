@@ -7,10 +7,13 @@
 
 import SwiftUI
 import UIKit
+import AVFoundation
 
 
 class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var states: StateVars = StateVars()
+        let posUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "diamond.mp3", ofType:nil)!)
+        let dropUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "drop.mp3", ofType:nil)!)
      
         let circleSize: CGFloat = 350.0
         var ballSize = 60
@@ -31,6 +34,8 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var boxHits: [Int] = []
         let button = UIButton()
         var plinkoMultiList: [Double] = []
+        var pos: AVAudioPlayer?
+        var drop: AVAudioPlayer?
     
     
     
@@ -53,7 +58,14 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
     
     func newBall(){
         
-        if(states.bal > states.bet){
+        if(states.bal >= states.bet){
+            do{
+                drop = try AVAudioPlayer(contentsOf: dropUrl)
+                drop?.play()
+                }
+            catch {
+            // couldn't load file :(
+            }
             
         
         states.totalSpent += states.bet
@@ -247,13 +259,33 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             
         }
         
-        if(Int(b!) != nil){
+        else if(Int(b!) != nil){
             
             let multi = plinkoMultiList[Int(b!)!]
             let boxPayOut = multi * states.bet
             states.plinkoBallsOut.append(StateVars.LastBall(multi: multi, payOut: boxPayOut ))
             states.bal += boxPayOut
             states.payOut += boxPayOut
+            
+            
+            if(multi > 1){
+                
+                do{
+                    pos = try AVAudioPlayer(contentsOf: posUrl)
+                    pos?.play()
+                    }
+                catch {
+                // couldn't load file :(
+                }
+                
+            
+                
+            }
+            
+        
+            
+            
+            
            
             
             
@@ -267,6 +299,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             resistance.removeItem(item)
             
         }
+        
         }
     
     //creates a new ball to drop into the view

@@ -33,10 +33,10 @@ class StateVars: ObservableObject {
         states.gamePlay = true
         states.payOut = 0
         states.multi = 1.00
-        states.plinkoBallsOut = []
+        states.plinkoBallsOut.removeAll()
         states.ballsToDrop = 0
         states.totalDropped = 0
-        states.totalDropped = 0
+        states.totalSpent = 0
         
     }
     

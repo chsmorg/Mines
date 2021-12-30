@@ -63,6 +63,7 @@ struct ContentView: View {
                     NavigationView{
                         VStack{
                             
+                            
                             Text("Current Balance:\n \(states.bal, specifier: "$%.2f")").font(.system(size: 25, weight: .bold, design: .default)).padding().fixedSize()
                             
                             
@@ -233,6 +234,9 @@ struct NavBar: View{
                 Button(action:{
                     if(number != states.selected){
                         states.selected = number
+                        if(states.bet>2000 && number == 1){
+                            states.bet = 2000
+                        }
                     }
                     
                     
