@@ -76,7 +76,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var ran: Double
         
         let minL = (boundary.frame.width * 0.5 - (boundary.frame.width/(Double(states.rows))*0.9))
-      let maxL = (boundary.frame.width * 0.5 - (boundary.frame.width/(Double(states.rows))*0.6))
+        let maxL = (boundary.frame.width * 0.5 - (boundary.frame.width/(Double(states.rows))*0.6))
         let minR = (boundary.frame.width * 0.5 + (boundary.frame.width/(Double(states.rows))*0.2))
         let maxR = (boundary.frame.width * 0.5 + (boundary.frame.width/(Double(states.rows))*0.4))
         
@@ -92,7 +92,7 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         
         //print(ran)
         
-        let ball = addBall(circle_Width: Double(165/Int(states.rows)), circle_Height: Double(165/Int(states.rows)), boundary: boundary, ran: ran, rows: Int(states.rows))
+        let ball = addBall(circle_Width: Double(174/Int(states.rows)), circle_Height: Double(174/Int(states.rows)), boundary: boundary, ran: ran, rows: Int(states.rows))
         
             
             boundary.addSubview(ball)

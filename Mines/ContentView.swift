@@ -35,6 +35,8 @@ struct ContentView: View {
                             
                             
                             Button(action: {
+                                
+                                print(makeDeck())
                                 if(states.bal != 0 && states.bet != 0){
                                     states.selected = 4
                                     if(states.bet>states.bal){
@@ -124,6 +126,7 @@ struct ContentView: View {
                 case 2:
                     NavigationView{
                         InfoPage(states: states)
+                        //BlackJack()
                     }
                 case 4:
                     NavigationView{
