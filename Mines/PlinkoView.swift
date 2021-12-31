@@ -12,8 +12,8 @@ import AVFoundation
 
 class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         var states: StateVars = StateVars()
-        let posUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "diamond.mp3", ofType:nil)!)
-        let dropUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "drop.mp3", ofType:nil)!)
+       // let posUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "diamond.mp3", ofType:nil)!)
+       // let dropUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "drop.mp3", ofType:nil)!)
      
         let circleSize: CGFloat = 350.0
         var ballSize = 60
@@ -60,8 +60,8 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
         
         if(states.bal >= states.bet){
             do{
-                drop = try AVAudioPlayer(contentsOf: dropUrl)
-                drop?.play()
+              //  drop = try AVAudioPlayer(contentsOf: dropUrl)
+               // drop?.play()
                 }
             catch {
             // couldn't load file :(
@@ -271,8 +271,8 @@ class PlinkoViewController: UIViewController, UICollisionBehaviorDelegate {
             if(multi > 1){
                 
                 do{
-                    pos = try AVAudioPlayer(contentsOf: posUrl)
-                    pos?.play()
+                  //  pos = try AVAudioPlayer(contentsOf: posUrl)
+                   // pos?.play()
                     }
                 catch {
                 // couldn't load file :(

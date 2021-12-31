@@ -61,8 +61,8 @@ public struct Mines: View {
 struct BView: View {
     @State var bomb: AVAudioPlayer?
     @State var diamond: AVAudioPlayer?
-    let bombUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "bomb.mp3", ofType:nil)!)
-    let diamondUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "diamond.mp3", ofType:nil)!)
+    //let bombUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "bomb.mp3", ofType:nil)!)
+    //let diamondUrl = URL(fileURLWithPath: Bundle.main.path(forResource: "diamond.mp3", ofType:nil)!)
     
   var cell: Cell
   var data: [Cell]
@@ -82,8 +82,8 @@ struct BView: View {
                 
                 states.payOut *= states.multi + (Double(states.buttonsHit)/100)
                 do{
-                    diamond = try AVAudioPlayer(contentsOf: diamondUrl)
-                    diamond?.play()
+                    //diamond = try AVAudioPlayer(contentsOf: diamondUrl)
+                   // diamond?.play()
             } catch {
                 // couldn't load file :(
             }
@@ -99,8 +99,8 @@ struct BView: View {
                 states.gamePlay = false
                 states.payOut = 0
                 do{
-                    bomb = try AVAudioPlayer(contentsOf: bombUrl)
-                    bomb?.play()
+                   // bomb = try AVAudioPlayer(contentsOf: bombUrl)
+                   //bomb?.play()
             } catch {
                 // couldn't load file :(
             }

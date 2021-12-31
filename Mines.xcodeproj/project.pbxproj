@@ -21,9 +21,6 @@
 		AB23EEBA276F534D0011B0B8 /* Plinko.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEB9276F534D0011B0B8 /* Plinko.swift */; };
 		AB23EEBE277192D70011B0B8 /* PlinkoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB23EEBD277192D60011B0B8 /* PlinkoView.swift */; };
 		AB288553277C1FA600C569E4 /* PlinkoPayOuts.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB288552277C1FA600C569E4 /* PlinkoPayOuts.swift */; };
-		AB4C50E5277A926A00B95E21 /* diamond.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB4C50E3277A926900B95E21 /* diamond.mp3 */; };
-		AB4C50E6277A926A00B95E21 /* bomb.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = AB4C50E4277A926A00B95E21 /* bomb.mp3 */; };
-		ABC3664E277D355F004A0AE6 /* drop.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = ABC3664D277D355F004A0AE6 /* drop.mp3 */; };
 		ABC36650277D3B5C004A0AE6 /* Cards.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC3664F277D3B5C004A0AE6 /* Cards.swift */; };
 		ABC366FA277EB361004A0AE6 /* cardImgs in Resources */ = {isa = PBXBuildFile; fileRef = ABC366F9277EB361004A0AE6 /* cardImgs */; };
 		ABC366FC277ECB87004A0AE6 /* BlackJack.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC366FB277ECB87004A0AE6 /* BlackJack.swift */; };
@@ -64,9 +61,6 @@
 		AB23EEB9276F534D0011B0B8 /* Plinko.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Plinko.swift; sourceTree = "<group>"; };
 		AB23EEBD277192D60011B0B8 /* PlinkoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlinkoView.swift; sourceTree = "<group>"; };
 		AB288552277C1FA600C569E4 /* PlinkoPayOuts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlinkoPayOuts.swift; sourceTree = "<group>"; };
-		AB4C50E3277A926900B95E21 /* diamond.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = diamond.mp3; path = "../../../coding stuff/mines assests/diamond.mp3"; sourceTree = "<group>"; };
-		AB4C50E4277A926A00B95E21 /* bomb.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bomb.mp3; path = "../../../coding stuff/mines assests/bomb.mp3"; sourceTree = "<group>"; };
-		ABC3664D277D355F004A0AE6 /* drop.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = drop.mp3; path = ../../../drop.mp3; sourceTree = "<group>"; };
 		ABC3664F277D3B5C004A0AE6 /* Cards.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cards.swift; sourceTree = "<group>"; };
 		ABC366F9277EB361004A0AE6 /* cardImgs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = cardImgs; path = ../../../Downloads/cardImgs; sourceTree = "<group>"; };
 		ABC366FB277ECB87004A0AE6 /* BlackJack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackJack.swift; sourceTree = "<group>"; };
@@ -121,9 +115,6 @@
 		AB23EE82276F3CFB0011B0B8 /* Mines */ = {
 			isa = PBXGroup;
 			children = (
-				ABC3664D277D355F004A0AE6 /* drop.mp3 */,
-				AB4C50E4277A926A00B95E21 /* bomb.mp3 */,
-				AB4C50E3277A926900B95E21 /* diamond.mp3 */,
 				AB23EE83276F3CFB0011B0B8 /* MinesApp.swift */,
 				ABC3664F277D3B5C004A0AE6 /* Cards.swift */,
 				ABC366FB277ECB87004A0AE6 /* BlackJack.swift */,
@@ -270,9 +261,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB4C50E5277A926A00B95E21 /* diamond.mp3 in Resources */,
-				ABC3664E277D355F004A0AE6 /* drop.mp3 in Resources */,
-				AB4C50E6277A926A00B95E21 /* bomb.mp3 in Resources */,
 				AB23EE8B276F3CFF0011B0B8 /* Preview Assets.xcassets in Resources */,
 				ABC366FA277EB361004A0AE6 /* cardImgs in Resources */,
 				AB23EE88276F3CFF0011B0B8 /* Assets.xcassets in Resources */,
